@@ -1,0 +1,473 @@
+[
+  {
+    "id": 1,
+    "title": "両側指数関数",
+    "latex_expr": "f(t) = e^{-|t|}",
+    "answer_expr": "\\displaystyle \\frac{2}{1+\\omega^{2}}",
+    "steps_jp": [
+      {
+        "explain": "まず、フーリエ変換の定義を確認します。関数 $f(t)=e^{-|t|}$ のフーリエ変換は、全区間で $e^{-|t|}e^{-i\\omega t}$ を積分することになります。",
+        "latex": "\\displaystyle \\mathcal{F}\\{e^{-|t|}\\}(\\omega) = \\int_{-\\infty}^{\\infty} e^{-|t|} e^{-i\\omega t} \\,dt"
+      },
+      {
+        "explain": "$e^{-|t|}$ は $t<0$ のとき $e^{t}、t\\ge0$ のとき $e^{-t}$ と振る舞うため、積分を $t<0$ の領域と $t\\ge0$ の領域に分けます。",
+        "latex": "\\displaystyle = \\int_{-\\infty}^{0} e^{t} e^{-i\\omega t} \\,dt + \\int_{0}^{\\infty} e^{-t} e^{-i\\omega t} \\,dt"
+      },
+      {
+        "explain": "まず、左側$（t<0）$を $I_{1}$ として計算します。ここでは指数 $e^{(1 - i\\omega)t}$ の形になっており、実部が $t\\to -\\infty$ へ行くときに収束します。",
+        "latex": "\\displaystyle I_{1} = \\int_{-\\infty}^{0} e^{(1 - i\\omega) t} \\,dt"
+      },
+      {
+        "explain": "積分公式 $「\\int e^{a t} dt = 1/a · e^{a t}」$を使って、上限 $0$、下限 -$\\infty$ を代入すると、下限側は $e^{t}\\to0$ なので消え、上限のみ残ります。",
+        "latex": "\\displaystyle I_{1} = \\left. \\frac{e^{(1 - i\\omega) t}}{1 - i\\omega} \\right|_{t=-\\infty}^{0} = \\frac{1}{1 - i\\omega}"
+      },
+      {
+        "explain": "次に、右側$（t\\ge0）$を $I_{2}$ として計算します。こちらは指数 $e^{-(1 + i\\omega)t}$ の形です。実部が正なので $t\\to\\infty$ で収束します。",
+        "latex": "\\displaystyle I_{2} = \\int_{0}^{\\infty} e^{-(1 + i\\omega) t} \\,dt"
+      },
+      {
+        "explain": "同じく $\\int e^{-b t} dt = -1/b · e^{-b t}$ を使い、上限 $t\\to\\infty$ で $0$、下限 $t=0$ で $1$ になるため、$1/(1 + i\\omega)$ が得られます。",
+        "latex": "\\displaystyle I_{2} = \\left. \\frac{e^{-(1 + i\\omega) t}}{-(1 + i\\omega)} \\right|_{0}^{\\infty} = \\frac{1}{1 + i\\omega}"
+      },
+      {
+        "explain": "全体のフーリエ変換は $I_{1} + I_{2}$ です。これを通分して整理すると、分子は $2$、分母は $1 + \\omega^{2}$ になることがわかります。",
+        "latex": "\\displaystyle \\frac{1}{1 - i\\omega} + \\frac{1}{1 + i\\omega} = \\frac{2}{1 + \\omega^{2}}"
+      }
+    ],
+    "comment": "## ポイント解説\n- |t| のある関数は積分を t<0, t\\ge0 で分割する。\n- 指数関数の積分公式 \\(\\int e^{a t} dt = 1/a e^{a t}\\) を適用し、t\\to\\pm\\infty での収束を確認する。\n- 通分して複素数を実数化する手順をきちんと追う。",
+    "points": [
+      "$|t|$ 付き → 積分区間分割",
+      "$\\int e^{a t} dt$ の公式適用",
+      "複素数の通分・実数化"
+    ],
+    "plot_type": "exp",
+    "priority": 3
+  },
+
+  {
+    "id": 2,
+    "title": "矩形波",
+    "latex_expr": "f(t)=\\begin{cases}1 & |t|\\le1\\\\0&\\text{otherwise}\\end{cases}",
+    "answer_expr": "2\\,\\mathrm{sinc}(\\omega)",
+    "steps_jp": [
+      {
+        "explain": "$f(t)$ は $|t| \\le 1$ のとき $1$、$|t| > 1$ のとき $0$ なので、積分範囲は $-1$ から $1$ までになります。",
+        "latex": "\\displaystyle \\mathcal{F}\\{f\\}(\\omega) = \\int_{-1}^{1} e^{-i\\omega t} \\,dt"
+      },
+      {
+        "explain": "不定積分 $\\int e^{-i\\omega t} dt = \\frac{e^{-i\\omega t}}{-i\\omega}$ を使って、上限と下限を代入します。",
+        "latex": "\\displaystyle \\left. \\frac{e^{-i\\omega t}}{-i\\omega} \\right|_{t=-1}^{1} = \\frac{e^{-i\\omega} - e^{i\\omega}}{-i\\omega} "
+      },
+      {
+        "explain": "分子の $e^{-i\\omega} - e^{i\\omega}$ は $-2i \\sin(\\omega)$ に書き換えられるため、分母 $-i\\omega$ と合わせて $\\frac{2 \\sin(\\omega)}{\\omega}$ となります。",
+        "latex": "\\displaystyle \\frac{e^{-i\\omega} - e^{i\\omega}}{-i\\omega} = \\frac{2\\sin\\omega}{\\omega}"
+      },
+      {
+        "explain": "$\\sin(\\omega)/\\omega$ を $\\mathrm{sinc}(\\omega)$ と定義すれば、最終的に $2\\,\\mathrm{sinc}(\\omega)$ が答えとなります。",
+        "latex": "\\displaystyle 2\\,\\mathrm{sinc}(\\omega)"
+      }
+    ],
+    "comment": "## ポイント解説\n- 積分区間を明示し、不定積分を適用する。\n- $e^{\\pm i\\omega}$ の差分をオイラーの公式で $\\sin$ へ変換。\n- $\\mathrm{sinc}(\\omega) = \\sin\\omega/\\omega$ の定義を利用する。",
+    "points": [
+      "**積分区間 $[-1,1]$ の意味**  関数 $f(t)$ が $|t| \\le 1$ で 1、その他で 0 なので、積分範囲が $-1 \\le t \\le 1$ に限定されます。",
+      "**フーリエ変換における不定積分の適用**  $\\int e^{-i\\omega t} dt = \\frac{e^{-i\\omega t}}{-i\\omega}$ を使って、上限と下限を代入します。",
+      "**オイラーの公式による三角関数への変換**  オイラーの公式 $e^{i\\theta} = \\cos(\\theta) + i\\sin(\\theta)$ を使うと：  $e^{-i\\omega} = \\cos(\\omega) - i\\sin(\\omega)$、$e^{i\\omega} = \\cos(\\omega) + i\\sin(\\omega)$ より、$e^{-i\\omega} - e^{i\\omega} = -2i\\sin(\\omega)$ になります。",
+      "**$\\mathrm{sinc}(\\omega)$ の定義**  $\\mathrm{sinc}(\\omega) = \\frac{\\sin(\\omega)}{\\omega}$ という定義を使って、結果をシンプルに表現できます。",
+      "**最終的なフーリエ変換の形**  上記を組み合わせると、$\\mathcal{F}\\{f(t)\\}(\\omega) = 2\\,\\mathrm{sinc}(\\omega)$ となります。"
+    ],
+    "plot_type": "rect",
+    "priority": 3
+  },
+
+  {
+    "id": 3,
+    "title": "三角波（|t|≤1）",
+    "latex_expr": "f(t)=1-|t|\\quad(|t|\\le1)",
+    "answer_expr": "\\mathrm{sinc}^{2}\\!\\left(\\frac{\\omega}{2}\\right)",
+    "steps_jp": [
+      {
+        "explain": "$f(t) = 1 - |t|$ は $|t| \\le 1$ で定義され、それ以外では $0$ です。フーリエ変換は定義に従って $e^{-i\\omega t}$ を掛けて $-1 \\le t \\le 1$ の範囲で積分します。",
+        "latex": "\\displaystyle \\mathcal{F}\\{f\\}(\\omega) = \\int_{-1}^{1} (1 - |t|) e^{-i\\omega t} \\,dt"
+      },
+      {
+        "explain": "$f(t)$ は偶関数であり、$e^{-i\\omega t}$ の偶成分は $\\cos(\\omega t)$、奇成分は $-i \\sin(\\omega t)$ なので、偶関数 × 偶関数の積だけが残り、虚部は消えます。",
+        "latex": "\\displaystyle = \\int_{-1}^{1} (1 - |t|) \\cos(\\omega t) \\,dt"
+      },
+      {
+        "explain": "この積分は偶関数の積なので $t \\ge 0$ の領域だけで 2 倍して計算できます。$|t| = t$ になるため $1 - |t| = 1 - t$ になります。",
+        "latex": "\\displaystyle = 2 \\int_{0}^{1} (1 - t) \\cos(\\omega t) \\,dt"
+      },
+      {
+        "explain": "ここで部分積分を使います。$u = 1 - t$、$dv = \\cos(\\omega t) dt$ と置きます。",
+        "latex": "\\displaystyle \\int_{0}^{1} (1 - t) \\cos(\\omega t) \\,dt = \\Bigl[ (1 - t) \\frac{\\sin(\\omega t)}{\\omega} \\Bigr]_{0}^{1} - \\int_{0}^{1} \\frac{\\sin(\\omega t)}{\\omega} (-1) \\,dt"
+      },
+      {
+        "explain": "境界項は $t=1$ でも $t=0$ でも $0$ になるため、残るのは $\\int_{0}^{1} \\sin(\\omega t)/\\omega \\,dt$ のみです。",
+        "latex": "\\displaystyle = \\int_{0}^{1} \\frac{\\sin(\\omega t)}{\\omega} \\,dt"
+      },
+      {
+        "explain": "$\\int_{0}^{1} \\sin(\\omega t) dt = (1 - \\cos(\\omega))/\\omega$ であるため、全体として $2(1 - \\cos(\\omega))/\\omega^2$ になります。",
+        "latex": "\\displaystyle = \\frac{2(1 - \\cos\\omega)}{\\omega^2}"
+      },
+      {
+        "explain": "さらに三角恒等式 $1 - \\cos(\\omega) = 2 \\sin^2(\\omega/2)$ を用いれば、$\\mathrm{sinc}^2(\\omega/2)$ の形に整理できます。",
+        "latex": "\\displaystyle \\frac{2(1 - \\cos\\omega)}{\\omega^2} = \\frac{4 \\sin^2(\\omega/2)}{\\omega^2} = \\mathrm{sinc}^2\\!\\left(\\frac{\\omega}{2}\\right)"
+      }
+    ],
+    "comment": "## ポイント解説\n- フーリエ変換の定義通りに $e^{-i\\omega t}$ を掛けて計算し、途中で偶関数性から虚部が消えることを確認する。\n- $(1 - |t|)$ は偶関数なので $[-1,1]$ の積分を $[0,1]$ の2倍に簡略化。\n- 部分積分と三角恒等式 $1 - \\cos(\\omega) = 2 \\sin^2(\\omega/2)$ を使い、$\\mathrm{sinc}^2$ で表す。",
+    "points": [
+      "**偶関数とは？** 偶関数とは左右対称（線対称）な関数で、$f(t) = f(-t)$ を満たします。例：$\\cos(\\omega t)$ や $1 - |t|$ など。",
+      "**奇関数とは？** 奇関数とは原点対称な関数で、$f(-t) = -f(t)$ を満たします。例：$\\sin(\\omega t)$、$t$、$\\operatorname{sgn}(t)$ など。",
+      "**関数の積による偶奇性の変化：**",
+      "- 偶 × 偶 → 偶関数",
+      "- 偶 × 奇 → 奇関数",
+      "- 奇 × 偶 → 奇関数",
+      "- 奇 × 奇 → 偶関数",
+      "**積分での打ち消し効果** 奇関数の積分（対称区間 $[-a, a]$）は 0 になるため、偶 × 奇 の項は打ち消し合って消えます。",
+      "**偶関数の積分は2倍にできる** 偶関数 $f(t)$ に対して、$\\int_{-a}^{a} f(t) dt = 2 \\int_{0}^{a} f(t) dt$ が使えます。",
+      "**偶関数のフーリエ変換は実数になることが多い** 偶関数 × $\\cos$ 成分が残ることで、スペクトルも実数対称になります。",
+      "**三角恒等式の利用** $1 - \\cos(\\omega) = 2 \\sin^2(\\omega/2)$ を使うと、最終結果を $\\mathrm{sinc}^2(\\omega/2)$ に整理できます。"
+    ],
+    "plot_type": "tri",
+    "priority": 3
+  },
+
+  {
+    "id": 4,
+    "title": "片側指数関数",
+    "latex_expr": "f(t)=e^{-t}\\,u(t)",
+    "answer_expr": "\\displaystyle \\frac{1}{1 + i\\omega}",
+    "steps_jp": [
+      {
+        "explain": "単位ステップ関数 $u(t)$ によって $f(t)=e^{-t} u(t)$ は $t \\ge 0$ でのみ値を持つため、積分範囲は $0$ から $\\infty$ になります。",
+        "latex": "\\displaystyle \\int_{0}^{\\infty} e^{-t} e^{-i\\omega t} \\,dt"
+      },
+      {
+        "explain": "指数 $e^{-t}e^{-i\\omega t}$ をまとめて $e^{-(1 + i\\omega) t}$ とし、$\\int_{0}^{\\infty} e^{-a t} dt = 1/a$ を適用します。ここでは $a = 1 + i\\omega$ であり、実部が正なので収束が保証されます。",
+        "latex": "\\displaystyle \\int_{0}^{\\infty} e^{-(1 + i\\omega) t} \\,dt = \\left. \\frac{e^{-(1 + i\\omega) t}}{-(1 + i\\omega)} \\right|_{0}^{\\infty} = \\frac{1}{1 + i\\omega}"
+      },
+      {
+        "explain": "したがって、フーリエ変換の結果は $\\frac{1}{1 + i\\omega}$ です。",
+        "latex": ""
+      }
+    ],
+    "comment": "## ポイント解説\n- $u(t)$ による積分下限が $0$ になる点を押さえる。\n- $a = 1 + i\\omega$ の実部が正であるため、$\\int_{0}^{\\infty} e^{-a t} dt = 1/a$ が適用できる。\n- 式変形の途中で虚数単位に注意する。",
+    "points": [
+      "$u(t)$ → 積分範囲が $0 \\le t < \\infty$",
+      "$\\int_{0}^{\\infty} e^{-a t} dt = 1/a$ の適用条件",
+      "$a = 1 + i\\omega$ の実部 $> 0$ で収束を確認"
+    ],
+    "plot_type": "exp_pos",
+    "priority": 3
+  },
+
+  {
+    "id": 5,
+    "title": "単位インパルス",
+    "latex_expr": "f(t)=\\delta(t)",
+    "answer_expr": "1",
+    "steps_jp": [
+      {
+        "explain": "デルタ関数 $\\delta(t)$ のフーリエ変換は、$\\int_{-\\infty}^{\\infty} \\delta(t) e^{-i\\omega t} \\,dt$ です。デルタの性質で、積分すると $e^{-i\\omega \\cdot 0} = 1$ になります。",
+        "latex": "\\displaystyle \\int_{-\\infty}^{\\infty} \\delta(t) e^{-i\\omega t} \\,dt = 1"
+      }
+    ],
+    "comment": "## ポイント解説\n- デルタ関数の「$\\int \\delta(t) g(t) \\,dt = g(0)$」というサンプリング性質を使う。\n- 任意の $\\omega$ に対して、$e^{-i\\omega \\cdot 0} = 1$ となるため、フーリエ変換は常に $1$。",
+    "points": [
+      "デルタ関数のサンプリング性質の理解",
+      "フーリエ変換で定数 $1$ が得られる理由"
+    ],
+    "plot_type": "delta",
+    "priority": 3
+  },
+
+  {
+    "id": 6,
+    "title": "コサイン関数",
+    "latex_expr": "f(t)=\\cos(\\omega_{0} t)",
+    "answer_expr": "\\pi\\bigl[\\delta(\\omega - \\omega_{0}) + \\delta(\\omega + \\omega_{0})\\bigr]",
+    "steps_jp": [
+      {
+        "explain": "コサインはオイラーの公式で $e^{i\\omega_{0} t} + e^{-i\\omega_{0} t}$ の和に変換できます。その係数 $1/2$ を忘れずに分解します。　この指数関数の形に直すことで、各項にデルタ関数のシフトの公式をそのまま適用できるようになります。",
+        "latex": "\\displaystyle \\cos(\\omega_{0} t) = \\frac{e^{i\\omega_{0} t} + e^{-i\\omega_{0} t}}{2}"
+      },
+      {
+        "explain": "一般に $e^{i a t}$ のフーリエ変換は $2\\pi \\delta(\\omega - a)$ であり、$e^{-i a t}$ の変換は $2\\pi \\delta(\\omega + a)$ になります。これを用いて変換します。",
+        "latex": "\\displaystyle \\mathcal{F}\\{e^{i\\omega_{0} t}\\}=2\\pi \\delta(\\omega - \\omega_{0}), \\quad \\mathcal{F}\\{e^{-i\\omega_{0} t}\\}=2\\pi \\delta(\\omega + \\omega_{0})"
+      },
+      {
+        "explain": "それぞれに $1/2$ を掛けて合成すると、最終的に $\\pi[\\delta(\\omega - \\omega_0) + \\delta(\\omega + \\omega_0)]$ となります。",
+        "latex": "\\displaystyle \\frac{1}{2} \\cdot 2\\pi \\delta(\\omega - \\omega_{0}) + \\frac{1}{2} \\cdot 2\\pi \\delta(\\omega + \\omega_{0}) = \\pi \\bigl[\\delta(\\omega - \\omega_{0}) + \\delta(\\omega + \\omega_{0})\\bigr]"
+      }
+    ],
+    "comment": "## ポイント解説\n- $\\cos(\\omega_0 t)$ を $e^{\\pm i\\omega_0 t}$ に分解し、指数関数の形に変換する。\n- 各項 $e^{\\pm i\\omega_0 t}$ にフーリエ変換のシフト公式 $\\mathcal{F}\\{e^{\\pm i a t}\\} = 2\\pi\\delta(\\omega \\mp a)$ を適用する。\n- 係数 $1/2$ をそれぞれに掛けた後、和を取って $\\pi[\\delta(\\omega - \\omega_0) + \\delta(\\omega + \\omega_0)]$ となる。",
+    "points": [
+      "**オイラーの公式の利用**  $\\cos(\\omega_0 t)$ は $\\frac{e^{i\\omega_0 t} + e^{-i\\omega_0 t}}{2}$ に書き換えることができます。これは複素指数関数の和で構成されています。",
+      "**フーリエ変換におけるシフトの公式（周波数領域）**  $\\mathcal{F}\\{e^{i a t}\\} = 2\\pi \\delta(\\omega - a)$、$\\mathcal{F}\\{e^{-i a t}\\} = 2\\pi \\delta(\\omega + a)$ という性質があります。",
+      "**コサインのフーリエ変換はデルタ関数の対称なペアになる**  $\\cos(\\omega_0 t)$ の変換結果は $\\delta(\\omega \\pm \\omega_0)$ の形で、正負対称な周波数成分を持つことがわかります。",
+      "**定数係数の扱いに注意**  $1/2 \\cdot 2\\pi$ のように係数の計算ミスがないように注意します。",
+      "**まとめ**  $\\cos(\\omega_0 t)$ のフーリエ変換は、指数関数に分解 → 各項にデルタ関数のシフト公式を適用 → 最後に合成、という流れで求めます。"
+    ],
+    "plot_type": "cos",
+    "priority": 3
+  },
+
+  {
+    "id": 13,
+    "title": "ガウス関数",
+    "latex_expr": "f(t)=e^{-\\pi t^{2}}",
+    "answer_expr": "e^{-\\pi \\omega^{2}}",
+    "steps_jp": [
+      {
+        "explain": "ガウス関数 $f(t) = e^{-\\pi t^{2}}$ は自己相似性を持つ関数です。フーリエ変換しても形は変わらず、パラメータだけが入れ替わります。",
+        "latex": "\\displaystyle \\int_{-\\infty}^{\\infty} e^{-a t^{2}} e^{-i\\omega t} \\,dt = \\sqrt{\\frac{\\pi}{a}} e^{-\\frac{\\omega^{2}}{4a}} \\quad (\\text{一般公式})"
+      },
+      {
+        "explain": "上の公式に $a = \\pi$ を代入すると、指数内のパラメータ $\\pi$ が相殺されて、最終的に $e^{-\\pi \\omega^{2}}$ という形になります。",
+        "latex": "\\displaystyle \\int_{-\\infty}^{\\infty} e^{-\\pi t^{2}} e^{-i\\omega t} \\,dt = \\sqrt{\\frac{\\pi}{\\pi}}\\,e^{-\\frac{\\omega^{2}}{4\\pi}\\cdot \\pi} = e^{-\\pi \\omega^{2}}"
+      }
+    ],
+    "comment": "## ポイント解説\n- ガウス積分の公式 $\\int_{-\\infty}^{\\infty} e^{-a t^{2}} e^{-i\\omega t} dt = \\sqrt{\\pi/a} e^{-\\omega^{2}/(4a)}$ を暗記しておく。\n- 平方完成の手順を省略せずに確認するときは、「$t^{2} + (i\\omega/a) t \\to (t + i\\omega/(2a))^{2} − (i\\omega/(2a))^{2}$」という変形を追う。\n- $a = \\pi$ を代入したとき、$\\sqrt{\\pi/\\pi} = 1$ になる点を見落とさない。",
+    "points": [
+      "ガウス積分公式の暗記",
+      "平方完成の各ステップの理解",
+      "$a = \\pi$ の代入によるパラメータの変化"
+    ],
+    "plot_type": "gauss",
+    "priority": 1
+  },
+
+  {
+    "id": 14,
+    "title": "単位ステップ関数",
+    "latex_expr": "f(t)=u(t)",
+    "answer_expr": "\\pi\\,\\delta(\\omega) + \\frac{1}{j\\omega}",
+    "steps_jp": [
+      {
+        "explain": "単位ステップ関数 $u(t)$ は $t < 0$ のとき $0$、$t \\ge 0$ のとき $1$ なので、フーリエ変換は $0$ から $\\infty$ まで $e^{-i\\omega t}$ を積分する形になります。ただしそのままでは収束しません。",
+        "latex": "\\displaystyle \\int_{0}^{\\infty} e^{-i\\omega t} \\,dt"
+      },
+      {
+        "explain": "収束させるために、$e^{-\\varepsilon t}$ ($\\varepsilon > 0$) を掛けてから $\\varepsilon \\to 0^{+}$ の極限を取る手法を導入します。すなわち、$\\int_{0}^{\\infty} e^{-(\\varepsilon + i\\omega)t} dt$ を考えます。",
+        "latex": "\\displaystyle \\lim_{\\epsilon \\to 0^{+}} \\int_{0}^{\\infty} e^{-(\\epsilon + i\\omega) t} \\,dt = \\lim_{\\epsilon \\to 0^{+}} \\frac{1}{\\epsilon + i\\omega}"
+      },
+      {
+        "explain": "$\\frac{1}{\\varepsilon + i\\omega}$ を $\\varepsilon \\to 0^{+}$ の極限で考えると、実部に $\\delta(\\omega)$ 成分、虚部に主値 $\\operatorname{PV}\\left(\\frac{1}{i\\omega}\\right)$ 成分が現れます。結果的に $\\pi\\delta(\\omega) + \\operatorname{PV}\\left(\\frac{1}{i\\omega}\\right)$ になります。",
+        "latex": "\\displaystyle \\lim_{\\epsilon \\to 0^{+}} \\frac{1}{\\epsilon + i\\omega} = \\pi\\,\\delta(\\omega) + \\operatorname{PV}\\!\\Bigl(\\frac{1}{i\\omega}\\Bigr)"
+      },
+      {
+        "explain": "通常、主値 $\\operatorname{PV}\\left(\\frac{1}{i\\omega}\\right)$ は $\\frac{1}{j\\omega}$ と書かれるため、最終的に $\\pi\\delta(\\omega) + \\frac{1}{j\\omega}$ という形になります。",
+        "latex": ""
+      }
+    ],
+    "comment": "## ポイント解説\n- 積分を収束させるために $e^{-\\varepsilon t}$ を掛けて $\\varepsilon \\to 0^{+}$ を取る定石的手法。\n- $\\lim_{\\varepsilon \\to 0^{+}} \\frac{1}{\\varepsilon + i\\omega} = \\pi\\delta(\\omega) + \\operatorname{PV}\\left(\\frac{1}{i\\omega}\\right)$ という分解を理解する。\n- $\\operatorname{PV}\\left(\\frac{1}{i\\omega}\\right)$ を $\\frac{1}{j\\omega}$ とみなす慣習を覚えておく。",
+    "points": [
+      "収束操作: $e^{-\\varepsilon t}$ を導入して $\\varepsilon \\to 0^{+}$",
+      "$\\delta(\\omega)$ 成分と主値 PV の分離",
+      "$\\operatorname{PV}\\left(\\frac{1}{i\\omega}\\right) = \\frac{1}{j\\omega}$ の理解"
+    ],
+    "plot_type": "step",
+    "priority": 1
+  },
+
+  {
+    "id": 15,
+    "title": "符号関数",
+    "latex_expr": "f(t)=\\operatorname{sgn}(t)=\\begin{cases}1 & t>0\\\\-1 & t<0\\end{cases}",
+    "answer_expr": "\\displaystyle \\frac{2}{j\\omega}",
+    "steps_jp": [
+      {
+        "explain": "符号関数 $\\operatorname{sgn}(t)$ は奇関数なので、フーリエ積分で $\\cos$ 成分（偶関数）は打ち消され、$\\sin$ 成分（奇関数）のみが残ります。",
+        "latex": ""
+      },
+      {
+        "explain": "したがって $\\int_{-\\infty}^{\\infty} \\operatorname{sgn}(t) e^{-i\\omega t} dt = -i \\int_{-\\infty}^{\\infty} \\operatorname{sgn}(t) \\sin(\\omega t) dt$ となり、奇関数×奇関数＝偶関数なので $2 \\int_{0}^{\\infty} \\sin(\\omega t) dt$ に変形できます。",
+        "latex": ""
+      },
+      {
+        "explain": "$\\int_{0}^{\\infty} \\sin(\\omega t) dt$ は振動して厳密には収束しませんが、主値（PV）として扱うと $1/\\omega$ になります。したがって全体で $-2i \\times \\frac{1}{\\omega} = \\frac{2}{j\\omega}$ となります。",
+        "latex": "\\displaystyle \\int_{0}^{\\infty} \\sin(\\omega t) \\,dt = \\frac{1}{\\omega}, \\quad -2i \\cdot \\frac{1}{\\omega} = \\frac{2}{j\\omega}"
+      }
+    ],
+    "comment": "## ポイント解説\n- 偶奇性：奇関数×偶関数＝奇、奇関数×奇関数＝偶という性質を利用する。\n- $\\int_{0}^{\\infty} \\sin(\\omega t) dt$ は主値として考えると $\\frac{1}{\\omega}$ になる。\n- 虚数単位 $i$ の扱いに注意し、$-2i/\\omega = \\frac{2}{j\\omega}$ と表記する。",
+    "points": [
+      "奇関数×偶関数 → 打ち消し、奇×奇 → 偶化",
+      "$\\int_{0}^{\\infty} \\sin(\\omega t) dt = \\frac{1}{\\omega}$（主値扱い）",
+      "$-2i/\\omega = \\frac{2}{j\\omega}$ の計算"
+    ],
+    "plot_type": "sgn",
+    "priority": 1
+  },
+
+  {
+    "id": 8,
+    "title": "定数関数",
+    "latex_expr": "f(t)=1",
+    "answer_expr": "2\\pi\\,\\delta(\\omega)",
+    "steps_jp": [
+      {
+        "explain": "$f(t) = 1$ のフーリエ変換は $\\int_{-\\infty}^{\\infty} e^{-i\\omega t} \\,dt$ になります。しかしこの積分は収束せず、定義的に $2\\pi\\delta(\\omega)$ となることが知られています。",
+        "latex": "\\displaystyle \\int_{-\\infty}^{\\infty} e^{-i\\omega t} \\,dt = 2\\pi\\,\\delta(\\omega)"
+      }
+    ],
+    "comment": "## ポイント解説\n- $\\int_{-\\infty}^{\\infty} e^{-i\\omega t} dt = 2\\pi\\delta(\\omega)$ という基本公式を覚えておく。\n- 定数関数は周波数領域で「$\\omega = 0$ の直流成分のみ」を持つという直感を押さえる。",
+    "points": [
+      "$2\\pi\\delta(\\omega)$ の基本公式",
+      "$\\text{定数} = \\text{直流成分}$ の対応"
+    ],
+    "plot_type": "const",
+    "priority": 2
+  },
+
+  {
+    "id": 9,
+    "title": "ランプ関数",
+    "latex_expr": "f(t)=t\\,u(t)",
+    "answer_expr": "\\displaystyle \\frac{1}{(j\\omega)^{2}} + \\pi t\\,\\delta(\\omega)",
+    "steps_jp": [
+      {
+        "explain": "ランプ関数 $t\\,u(t)$ は $t < 0$ で $0$、$t \\ge 0$ で $t$ の値を持ちます。これを直接積分するよりも、時間領域で $t$ を掛けると周波数領域で微分（$i \\frac{d}{d\\omega}$）になる性質を使います。",
+        "latex": ""
+      },
+      {
+        "explain": "まず $u(t)$ のフーリエ変換 $G(\\omega) = \\pi\\delta(\\omega) + \\frac{1}{j\\omega}$ を思い出します。次に「$t g(t)$ のフーリエ変換 $= i \\frac{dG(\\omega)}{d\\omega}$」を適用すると、$i\\left[\\pi\\delta'(\\omega) + \\frac{i}{\\omega^2}\\right]$ が得られます。",
+        "latex": "\\displaystyle G(\\omega) = \\pi\\delta(\\omega) + \\frac{1}{j\\omega}, \\quad \\frac{d}{d\\omega}G(\\omega) = \\pi\\delta'(\\omega) + \\frac{i}{\\omega^{2}}"
+      },
+      {
+        "explain": "$i$ を掛けると $i\\cdot\\pi\\delta'(\\omega) + i\\cdot\\left(\\frac{i}{\\omega^2}\\right) = i\\pi\\delta'(\\omega) - \\frac{1}{\\omega^2}$ となります。ここで $\\delta'(\\omega)$ はデルタ関数の導関数で、教科書的に $\\pi t\\delta(\\omega)$ の形に言い換えると、最終式は $\\frac{1}{(j\\omega)^2} + \\pi t\\delta(\\omega)$ となります。",
+        "latex": ""
+      }
+    ],
+    "comment": "## ポイント解説\n- 時間領域で $t$ を掛ける $\\Rightarrow$ 周波数領域で $i \\frac{d}{d\\omega}$ という性質を利用する。\n- $u(t)$ のフーリエ変換 $\\pi\\delta(\\omega) + \\frac{1}{j\\omega}$ を先に覚えておく。\n- デルタ関数の導関数 $\\delta'(\\omega)$ と $t\\delta(\\omega)$ の対応関係を理解する。",
+    "points": [
+      "$f(t) = t g(t)$ $\\Rightarrow$ $i \\frac{dG(\\omega)}{d\\omega}$ の公式",
+      "$G(\\omega) = \\pi\\delta(\\omega) + \\frac{1}{j\\omega}$ の微分手順",
+      "$\\delta'(\\omega)$ $\\Rightarrow$ $t\\delta(\\omega)$ への変換"
+    ],
+    "plot_type": "ramp",
+    "priority": 1
+  },
+
+  {
+    "id": 10,
+    "title": "sinc 関数",
+    "latex_expr": "f(t)=\\mathrm{sinc}(t)=\\frac{\\sin(\\pi t)}{\\pi t}",
+    "answer_expr": "\\displaystyle \\mathrm{rect}\\!\\left(\\frac{\\omega}{2\\pi}\\right)",
+    "steps_jp": [
+      {
+        "explain": "$\\mathrm{sinc}(t)=\\frac{\\sin(\\pi t)}{\\pi t}$ のフーリエ変換は矩形関数になることが知られています。その定義は、矩形関数 $\\mathrm{rect}(x)$ は $|x| \\le \\frac{1}{2}$ のとき 1、それ以外は 0 です。",
+        "latex": "\\displaystyle \\mathrm{rect}(x) = \\begin{cases}1 & |x| \\le \\frac{1}{2}, \\\\ 0 & |x| > \\frac{1}{2}. \\end{cases}"
+      },
+      {
+        "explain": "フーリエ変換の定義に代入すると、解析的に積分するのは難しいですが、既知の結果として帯域が $[−\\pi,\\pi]$ の範囲で 1、それ以外は 0 になる矩形関数が出力されます。",
+        "latex": "\\displaystyle \\int_{-\\infty}^{\\infty} \\frac{\\sin(\\pi t)}{\\pi t} e^{-i\\omega t} \\,dt = \\begin{cases}1 & |\\omega| \\le \\pi, \\\\ 0 & |\\omega| > \\pi. \\end{cases}"
+      },
+      {
+        "explain": "この結果を $\\mathrm{rect}\\left(\\frac{\\omega}{2\\pi}\\right)$ の形で書き換えると、最終的に $f(t)$ のフーリエ変換は $\\mathrm{rect}\\left(\\frac{\\omega}{2\\pi}\\right)$ になります。",
+        "latex": "\\displaystyle \\mathrm{rect}\\!\\Bigl(\\tfrac{\\omega}{2\\pi}\\Bigr)"
+      }
+    ],
+    "comment": "## ポイント解説\n- $\\mathrm{sinc}(t)=\\frac{\\sin(\\pi t)}{\\pi t} \\leftrightarrow \\mathrm{rect}\\left(\\frac{\\omega}{2\\pi}\\right)$ という基本ペアを暗記する。\n- $|\\omega|\\le\\pi$ の帯域で 1、それ以外は 0 になるという考え方を押さえる。\n- 実際に積分して確認するよりも、“既知結果” として速く使えるようにしておく。",
+    "points": [
+      "$\\mathrm{sinc}(t)$ と $\\mathrm{rect}$ の定義理解",
+      "フーリエ変換での帯域制限の視覚的イメージ",
+      "スケーリング：$\\omega/(2\\pi)$ の扱い"
+    ],
+    "plot_type": "sinc",
+    "priority": 1
+  },
+
+  {
+    "id": 11,
+    "title": "周期矩形波 (50% Duty, 周期 2π)",
+    "latex_expr": "f(t)=\\mathrm{sgn}(\\sin t)",
+    "answer_expr": "\\displaystyle \\frac{4}{\\omega} \\sum_{\\substack{k=-\\infty \\\\ k\\text{ odd}}}^{\\infty} \\delta(\\omega - k)",
+    "steps_jp": [
+      {
+        "explain": "$f(t)=\\mathrm{sgn}(\\sin t)$ は周期 $2\\pi$ の 50\\% デューティーを持つ矩形波です。これは奇関数なので、フーリエ級数では正弦成分のみが現れます。",
+        "latex": ""
+      },
+      {
+        "explain": "フーリエ級数の係数は $c_{n} = \\frac{1}{\\pi}\\int_{-\\pi}^{\\pi} f(t) e^{-i n t} dt$ で求まりますが、既知の結果として奇数 $n$ のとき $\\frac{4}{\\pi n}$、偶数 $n$ のとき 0 になります。",
+        "latex": "\\displaystyle c_{n} = \\begin{cases} \\frac{4}{\\pi n} & n\\text{ が奇数},\\\\ 0 & n\\text{ が偶数}. \\end{cases}"
+      },
+      {
+        "explain": "周期関数のフーリエ変換は “$2\\pi \\sum c_{n} \\delta(\\omega − n)$” というディラック列になるので、奇数成分のみを取ると $2\\pi\\cdot\\frac{4}{\\pi n} \\delta(\\omega−n)$ の和になります。定数を整理すると $\\frac{4}{n} \\delta(\\omega−n)$ と書け、これを “$\\frac{4}{\\omega} \\sum \\delta(\\omega−k)$” の形にまとめることができます。",
+        "latex": "\\displaystyle 2\\pi \\sum_{\\substack{n=-\\infty \\\\ n\\text{ odd}}}^{\\infty} \\frac{4}{\\pi n} \\delta(\\omega - n) = 4 \\sum_{k\\text{ odd}} \\frac{1}{k} \\delta(\\omega - k) = \\frac{4}{\\omega} \\sum_{k\\text{ odd}} \\delta(\\omega - k)"
+      }
+    ],
+    "comment": "## ポイント解説\n- 周期関数のフーリエ級数係数 $c_{n}$ の導出（奇数成分のみ存在する）を押さえる。\n- フーリエ級数係数 $c_{n}$ とフーリエ変換上のディラック重み $2\\pi c_{n}$ の対応関係を理解する。\n- $1/n$ の形を $1/\\omega$ に言い換えることで、最終的に “$\\frac{4}{\\omega} \\sum \\delta(\\omega−k)$” の形にまとめる。",
+    "points": [
+      "$f(t)=\\mathrm{sgn}(\\sin t)$ のフーリエ級数係数 $c_{n}$（奇数のみ）",
+      "周期 $2\\pi$ のフーリエ変換は $2\\pi \\sum c_{n} \\delta(\\omega−n)$",
+      "$1/n \\rightarrow 1/\\omega$ の置き換え"
+    ],
+    "plot_type": "sq_per",
+    "priority": 1
+  },
+
+  {
+    "id": 12,
+    "title": "鋸波 (周期 2π)",
+    "latex_expr": "f(t)=\\dfrac{t}{\\pi}\\quad(-\\pi<t<\\pi),\\quad\\text{周期延長}",
+    "answer_expr": "\\displaystyle 2j \\sum_{k\\neq0} \\frac{(-1)^{k}}{k} \\delta(\\omega - k)",
+    "steps_jp": [
+      {
+        "explain": "鋸波 $f(t)$ は $(-\\pi,\\pi)$ で $f(t)=t/\\pi$、その後 $2\\pi$ ごとに周期延長します。これは奇関数なので、フーリエ級数は正弦成分のみで展開できます。",
+        "latex": ""
+      },
+      {
+        "explain": "フーリエ級数係数 $b_{n}$ は $\\frac{1}{\\pi}\\int_{-\\pi}^{\\pi} \\frac{t}{\\pi} \\sin(n t) \\,dt$ で求まります。積分は奇関数×奇関数=偶関数になるので、$2\\int_{0}^{\\pi} t \\sin(n t) \\,dt$ を計算します。",
+        "latex": "\\displaystyle b_{n} = \\frac{1}{\\pi^{2}} \\int_{-\\pi}^{\\pi} t \\sin(n t) \\,dt = \\frac{2}{\\pi^{2}} \\int_{0}^{\\pi} t \\sin(n t) \\,dt"
+      },
+      {
+        "explain": "$\\int_{0}^{\\pi} t \\sin(n t) dt$ は部分積分を使います。$u=t$, $dv=\\sin(n t) dt$ と置くと、境界項が $-\\pi(-1)^{n}/n$ になり、残りの部分は $\\sin(n\\pi)=0$ などで 0 になります。したがって $\\int_{0}^{\\pi} t \\sin(n t) dt = -\\pi(-1)^{n}/n$ です。",
+        "latex": ""
+      },
+      {
+        "explain": "$b_{n} = \\frac{2}{\\pi^{2}}(-\\pi(-1)^{n}/n) = -\\frac{2(-1)^{n}}{\\pi n}$ となり、符号を整えると $b_{n} = \\frac{2(-1)^{n+1}}{\\pi n}$ です。従って $f(t)=\\sum b_{n} \\sin(n t)$ となります。",
+        "latex": ""
+      },
+      {
+        "explain": "周期 $2\\pi$ の関数のフーリエ変換は $2\\pi \\sum c_{n} \\delta(\\omega - n)$ です。ここで奇関数なので $c_{n} = -i b_{|n|}/(2\\pi)$ の関係を用いて整理すると、$2j \\sum_{k\\neq0} \\frac{(-1)^{k}}{k} \\delta(\\omega - k)$ が得られます。",
+        "latex": "\\displaystyle 2j \\sum_{k \\neq 0} \\frac{(-1)^{k}}{k} \\delta(\\omega - k)"
+      }
+    ],
+    "comment": "## ポイント解説\n- 鋸波は $(-\\pi,\\pi)$ で $t/\\pi$、その後 $2\\pi$ で周期延長。\n- フーリエ級数係数 $b_{n}$ を部分積分で求め、$b_{n}=\\frac{2(-1)^{n+1}}{\\pi n}$ を得る。\n- 周期関数のフーリエ変換は $2\\pi \\sum c_{n} \\delta(\\omega−n)$ というディラック列になり、奇関数では $c_{n}$ と $b_{n}$ の関係を使って式を整理する。",
+    "points": [
+      "鋸波 $f(t)=t/\\pi$ の定義と奇関数性",
+      "部分積分による $\\int t \\sin(n t) dt$ の計算",
+      "フーリエ変換は $2\\pi \\sum c_{n} \\delta(\\omega−n)$ の形式"
+    ],
+    "plot_type": "saw",
+    "priority": 1
+  },
+  {
+    "id": 7,
+    "title": "時間シフト矩形波 (中心 τ)",
+    "latex_expr": "f(t) = \\begin{cases} 1 & \\text{if } |t| \\le 1 \\\\ 0 & \\text{otherwise} \\end{cases}",
+    "answer_expr": "2\\,\\mathrm{sinc}(\\omega) e^{-i\\omega}",
+    "steps_jp": [
+      {
+        "explain": "まず、幅 $2$ の矩形関数 $g(t)=\\Pi(t/2)$ を考えます。これは $|t|\\le1$ のとき $1$、それ以外は $0$ です。そのフーリエ変換は $2\\,\\mathrm{sinc}(\\omega)$ になります。",
+        "latex": "\\displaystyle \\int_{-1}^{1} e^{-i\\omega t} \\,dt = \\frac{2\\sin\\omega}{\\omega} = 2\\,\\mathrm{sinc}(\\omega)"
+      },
+      {
+        "explain": "次に、この $g(t)$ を右に $1$ だけシフトして $f(t)=g(t-1)$ とします。シフト性より、フーリエ変換は $G(\\omega) e^{-i\\omega\\cdot 1}$ となり、$2\\,\\mathrm{sinc}(\\omega) e^{-i\\omega}$ が得られます。",
+        "latex": "\\displaystyle \\mathcal{F}\\{g(t - 1)\\}(\\omega) = G(\\omega) e^{-i\\omega} = 2\\,\\mathrm{sinc}(\\omega) e^{-i\\omega}"
+      },
+      {
+        "explain": "よって $f(t)=\\Pi((t-1)/2)$ のフーリエ変換は $2\\,\\mathrm{sinc}(\\omega) e^{-i\\omega}$ になります。",
+        "latex": ""
+      }
+    ],
+    "comment": "## ポイント解説\n- 矩形関数 $g(t)=\\Pi(t/2)$ のフーリエ変換 $2\\,\\mathrm{sinc}(\\omega)$ をまず押さえる。\n- シフト性: $f(t−\\tau)$ のフーリエ変換は $F(\\omega) e^{-i\\omega\\tau}$ になる。\n- シンプルに位相項 $e^{-i\\omega}$ を掛けるだけでよい。",
+    "points": [
+      "$g(t)=\\Pi(t/2)$ のフーリエ変換: $2\\,\\mathrm{sinc}(\\omega)$",
+      "シフト性: $F(\\omega)e^{-i\\omega\\tau}$ の理解",
+      "$\\mathrm{sinc}(\\omega)$ と位相項 $e^{-i\\omega}$"
+    ],
+    "plot_type": "rect_shift",
+    "priority": 3
+  }
+]
