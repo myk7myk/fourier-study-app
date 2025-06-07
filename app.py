@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import random
 
-print("Hello from venv!")  # ← これを追加
-
 # ---------- 共通ヘルパ ----------
 def _plot_basic(x, y, ylim=None):
     fig, ax = plt.subplots()
