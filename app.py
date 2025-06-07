@@ -80,6 +80,22 @@ def plot_saw():
 def plot_rect_shift():
     x = np.linspace(-4, 4, 1000)
     _plot_basic(x, np.where(np.abs(x - 1) <= 1, 1, 0), ylim=(-0.2, 1.2))
+    
+def plot_sin():
+    x = np.linspace(-4, 4, 1000)
+    _plot_basic(x, np.sin(2 * np.pi * x))
+    
+def plot_sym_ramp():
+    x = np.linspace(-4, 4, 1000)
+    y = np.where(np.abs(x) < 1, x, 0)  # -1 < x < 1 の間だけ傾き1の直線、それ以外0
+    _plot_basic(x, y, ylim=(-1.2, 1.2))
+    
+def plot_ramp_0_1():
+    x = np.linspace(-4, 4, 1000)
+    y = np.where((0 <= x) & (x < 1), x, 0)
+    _plot_basic(x, y, ylim=(-0.2, 1.2))
+
+
 
 # ---------- 辞書登録 ----------
 plot_functions = {
@@ -98,6 +114,9 @@ plot_functions = {
     "sq_per": plot_sq_per,
     "saw": plot_saw,
     "rect_shift": plot_rect_shift,
+    "sin": plot_sin,
+    "sym_ramp": plot_sym_ramp,
+    "ramp_0_1": plot_ramp_0_1,
 }
 
 # ---------- データ読み込み ----------
